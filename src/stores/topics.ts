@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
 export type Topic = {
-  [column: string]: string;
+  [column: string]: string | number;
 }
 
 export type ColumnSelection = {
@@ -16,6 +16,7 @@ export const useTopicsStore = defineStore('topics', () => {
   const headers = useStorage<string[]>('headers', [])
   const topics = useStorage<Topics>('topics', [])
   const columnDisplay = useStorage<ColumnSelection>('column-display', {})
+  const topicsDone = useStorage<Topics>('topicsDone', [])
   
   const displayedColumns = computed(() => headers.value.filter(header => columnDisplay.value[header]))
 
@@ -56,11 +57,53 @@ export const useTopicsStore = defineStore('topics', () => {
 
     function tryParse(value: string) : string | number {
       const intValue = parseInt(value)
-      return Number.isNaN(intValue)
+      return Number.isNaN(intValue) || intValue + "" != value
         ? value
         : intValue
     }
   }
 
-  return { topics, headers, columnDisplay, displayedColumns, importRawString }
+  function markAsDone(topicIndex: number) {
+    const topic = topics.value.splice(topicIndex, 1)[0]
+    if (topic) {
+      topicsDone.value.push(topic)
+    }
+  }
+
+  function getTopics(done: boolean) {
+    return done ? topicsDone.value : topics.value
+  }
+
+  
+  function moveToIndex(fromDone: boolean, topicIndex: number, newIndex: number) {
+    const topic = getTopics(fromDone).splice(topicIndex, 1)[0]
+      if (topic) {
+      topics.value.splice(newIndex, 0, topic)
+    }
+  }
+
+  function moveToNow(fromDone: boolean, topicIndex: number) {
+    moveToIndex(fromDone, topicIndex, 0)
+  }
+  
+  function moveToNext(fromDone: boolean, topicIndex: number) {
+    moveToIndex(fromDone, topicIndex, 1)
+  }
+  
+  function moveToLast(fromDone: boolean, topicIndex: number) {
+    moveToIndex(fromDone, topicIndex, topics.value.length - (fromDone ? 0 : 1))
+  }
+
+  return { 
+    topics,
+    headers, 
+    columnDisplay, 
+    displayedColumns,
+    topicsDone, 
+    importRawString,
+    markAsDone,
+    moveToNow,
+    moveToNext,
+    moveToLast
+  }
 })

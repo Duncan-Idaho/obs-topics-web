@@ -13,7 +13,7 @@ const store = useTopicsStore()
       <template #top>
         <TopicsList 
           v-if="store.displayedColumns.length" 
-          :columns="store.displayedColumns"
+          v-model:columns="store.displayedColumns"
           v-model="store.topics"
           
           @move-to-now="(index) => store.moveToNow(false, index)"
@@ -25,7 +25,7 @@ const store = useTopicsStore()
       <template #bottom>
         <TopicsList 
           v-if="store.displayedColumns.length" 
-          :columns="store.displayedColumns"
+          v-model:columns="store.displayedColumns"
           v-model="store.topicsDone"
           isDone
           

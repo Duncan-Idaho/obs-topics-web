@@ -80,6 +80,28 @@ describe('Topics store', () => {
 
     expect(store.displayedColumns).toEqual(["Team", "Order"])
   })
+  
+  it('allows reordering of columns', () => {
+    const store = useTopicsStore()
+    
+    store.importRawString(example, false)
+    store.columnDisplay.Team = true
+    store.columnDisplay['Presenter(s)'] = true
+    store.columnDisplay['For the mail'] = true
+
+    expect(store.displayedColumns).toEqual(["Team", "Presenter(s)", "For the mail"])
+
+    store.displayedColumns = ["Team", "For the mail", "Presenter(s)"]
+    expect(store.displayedColumns).toEqual(["Team", "For the mail", "Presenter(s)"])
+    expect(store.headers).toEqual([
+      'Team',
+      'For the mail',
+      'Presenter(s)',
+      'Order',
+      'Subject',
+      'For the chat',
+    ].concat([... expectedColumns].slice(6)))
+  })
 
   it('displays no topic as done initially', () => {
     const store = useTopicsStore()

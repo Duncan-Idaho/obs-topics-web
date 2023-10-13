@@ -18,7 +18,14 @@ export const useTopicsStore = defineStore('topics', () => {
   const columnDisplay = useStorage<ColumnSelection>('column-display', {})
   const topicsDone = useStorage<Topics>('topicsDone', [])
   
-  const displayedColumns = computed(() => headers.value.filter(header => columnDisplay.value[header]))
+  const displayedColumns = computed({
+    get: () => headers.value.filter(header => columnDisplay.value[header]),
+    set: newList => {
+      headers.value = newList.concat(
+        headers.value.filter(header => !newList.find(existingHeader => existingHeader === header))
+      )
+    }
+  })
 
   function importRawString(rawString: string, shouldStopImportAtFirstEmptyLine: boolean) {
     var lines = splitLines(rawString);

@@ -14,6 +14,7 @@ const emit = defineEmits<{
   (e: 'moveToLast', id: number): void
   (e: 'markAsDone', id: number): void
   (e: 'update:modelValue', topics: Topics): void
+  (e: 'update:columns', columns: string[]): void
 }>()
 
 </script>
@@ -21,15 +22,29 @@ const emit = defineEmits<{
 <template>
   <table>
     <thead>
-      <th>Actions</th>
-      <th v-for="column in columns" :key="column">{{ column }}</th>
+      <VueDraggable 
+        :model-value="columns"
+        @update:model-value="newValue => emit('update:columns', newValue)" 
+        tag="tr" 
+        :item-key="(key: string) => key"
+        ghost-class="ghost"
+      >
+        <template #header>
+          <th class="action-header">Actions</th>
+        </template>
+        <template #item="{ element: column }">
+          <th>{{ column }}</th>
+        </template>
+      </VueDraggable>
     </thead>
+    
     <VueDraggable 
       :model-value="modelValue"
-      @update:model-value="newValue => emit('update:modelValue', newValue)" 
+      @update:model-value="newValue => emit('update:modelValue', newValue)"
       tag="tbody" 
       item-key="$id"
-      ghost-class="ghost">
+      ghost-class="ghost"
+    >
       <template #item="{ element: topic, index }">
         <tr>
           <td>
@@ -65,7 +80,11 @@ th {
   font-weight: bold;
 }
 
-tr {
+th:not(.action-header) {
+  cursor: move;
+}
+
+tbody tr {
   cursor: move;
 }
 

@@ -1,18 +1,21 @@
 @import './base.css';
 
 #app {
-  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
   display: flex;
   flex-flow: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 main {
   flex: 1;
+  overflow: auto;
+  
+  display: flex;
+  flex-flow: column;
 }
 
 a,

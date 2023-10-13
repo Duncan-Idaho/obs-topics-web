@@ -22,12 +22,7 @@ function importRawString() {
   </div>
 </template>
 
-<style>
-main {
-  display: flex;
-  flex-flow: column;
-}
-
+<style scoped>
 textarea {
   resize: none;
   flex: 1;

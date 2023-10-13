@@ -7,7 +7,7 @@ describe('TopicsList', () => {
   it('display each columns in header plus actions', () => {
     const wrapper = mount(TopicsList, { props: { 
       columns: ['Team', 'Order'],
-      topics: [
+      modelValue: [
         { Team: "Falcon", Order: 12 },
         { Team: "Antares", Order: 42, SomeOtherField: "Plop" },
       ] 
@@ -21,12 +21,12 @@ describe('TopicsList', () => {
   it('display each topics in same order than header', () => {
     const wrapper = mount(TopicsList, { props: { 
       columns: ['Team', 'Order'],
-      topics: [
+      modelValue: [
         { Team: "Falcon", Order: 12 },
         { Order: 42, Team: "Antares", SomeOtherField: "Plop" },
       ] 
     } })
-    expect(wrapper.findAll("tr")).toHaveLength(2)
+    expect(wrapper.findAll("tbody tr")).toHaveLength(2)
 
     expect(wrapper.findAll("tr:nth-child(1) > td")).toHaveLength(3)
     expect(wrapper.find("tr:nth-child(1) > td:nth-child(2)").text()).toBe("Falcon")

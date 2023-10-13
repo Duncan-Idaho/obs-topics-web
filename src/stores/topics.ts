@@ -28,7 +28,7 @@ export const useTopicsStore = defineStore('topics', () => {
 
     headers.value = lines[0].trim().split('\t').map(header => header.trim());
     topics.value = lines.slice(1)
-        .map(entry => parseTopicEntry(entry));
+        .map((entry, index) => parseTopicEntry(entry, index));
 
     function splitLines(rawString: string): string[] {
       const allTopicLines = rawString.split('\n')
@@ -46,13 +46,15 @@ export const useTopicsStore = defineStore('topics', () => {
             break;
     }
 
-    function parseTopicEntry(topicEntry: string): Topic {
+    function parseTopicEntry(topicEntry: string, topicIndex: Number): Topic {
       const columnEntries = topicEntry.split('\t')
         .map((value, index) => ({ index, value: value.trim() }))
         .filter(pair => pair.index < headers.value.length)
         .map(pair => [ headers.value[pair.index], tryParse(pair.value) ])
 
-      return Object.fromEntries(columnEntries)
+      const topic = Object.fromEntries(columnEntries)
+      topic["$id"] = topicIndex
+      return topic
     }
 
     function tryParse(value: string) : string | number {

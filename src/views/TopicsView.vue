@@ -14,7 +14,7 @@ const store = useTopicsStore()
         <TopicsList 
           v-if="store.displayedColumns.length" 
           :columns="store.displayedColumns"
-          :topics="store.topics"
+          v-model="store.topics"
           
           @move-to-now="(index) => store.moveToNow(false, index)"
           @move-to-next="(index) => store.moveToNext(false, index)"
@@ -26,7 +26,7 @@ const store = useTopicsStore()
         <TopicsList 
           v-if="store.displayedColumns.length" 
           :columns="store.displayedColumns"
-          :topics="store.topicsDone"
+          v-model="store.topicsDone"
           isDone
           
           @move-to-now="(index) => store.moveToNow(true, index)"

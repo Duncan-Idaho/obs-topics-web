@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { Topics } from '@/stores/topics';
+import type { Topic, Topics } from '@/stores/topics';
+import VueDraggable from "vuedraggable"
 
 defineProps<{
   columns: string[],
-  topics: Topics,
+  modelValue: Topics,
   isDone?: boolean
 }>()
 
@@ -12,6 +13,7 @@ const emit = defineEmits<{
   (e: 'moveToNext', id: number): void
   (e: 'moveToLast', id: number): void
   (e: 'markAsDone', id: number): void
+  (e: 'update:modelValue', topics: Topics): void
 }>()
 
 </script>
@@ -22,24 +24,31 @@ const emit = defineEmits<{
       <th>Actions</th>
       <th v-for="column in columns" :key="column">{{ column }}</th>
     </thead>
-    <tbody>
-      <tr v-for="(topic, index) in topics" :key="index">
-        <td>
-          <button @click="emit('moveToNow', index)" v-if="isDone || index !== 0">▶️</button>
-          <div class="button-gap" v-else></div>
+    <VueDraggable 
+      :model-value="modelValue"
+      @update:model-value="newValue => emit('update:modelValue', newValue)" 
+      tag="tbody" 
+      item-key="$id"
+      ghost-class="ghost">
+      <template #item="{ element: topic, index }">
+        <tr>
+          <td>
+            <button @click="emit('moveToNow', index)" v-if="isDone || index !== 0">▶️</button>
+            <div class="button-gap" v-else></div>
 
-          <button @click="emit('moveToNext', index)" v-if="isDone || index !== 1">⏱️</button>
-          <div class="button-gap" v-else></div>
+            <button @click="emit('moveToNext', index)" v-if="isDone || index !== 1">⏱️</button>
+            <div class="button-gap" v-else></div>
 
-          <button @click="emit('moveToLast', index)" v-if="isDone || index !== topics.length - 1">⏬</button>
-          <div class="button-gap" v-else></div>
+            <button @click="emit('moveToLast', index)" v-if="isDone || index !== modelValue.length - 1">⏬</button>
+            <div class="button-gap" v-else></div>
 
-          <button @click="emit('markAsDone', index)" v-if="!isDone">✔️</button>
-          <div class="button-gap" v-else></div>
-        </td>
-        <td v-for="column in columns" :key="column">{{ topic[column] }}</td>
-      </tr>
-    </tbody>
+            <button @click="emit('markAsDone', index)" v-if="!isDone">✔️</button>
+            <div class="button-gap" v-else></div>
+          </td>
+          <td v-for="column in columns" :key="column">{{ topic[column] }}</td>
+        </tr>
+      </template>
+    </VueDraggable>
   </table>
 </template>
 
@@ -56,6 +65,10 @@ th {
   font-weight: bold;
 }
 
+tr {
+  cursor: move;
+}
+
 button, .button-gap {
   display: inline-block;
   padding: 0;
@@ -67,5 +80,10 @@ button, .button-gap {
 }
 .button-gap::before {
   content: "\00a0";
+}
+
+.ghost {
+  opacity: .7;
+  background: #C8EBFB;
 }
 </style>

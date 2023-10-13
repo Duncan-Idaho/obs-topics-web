@@ -29,11 +29,11 @@ describe('TopicsList', () => {
     expect(wrapper.findAll("tbody tr")).toHaveLength(2)
 
     expect(wrapper.findAll("tr:nth-child(1) > td")).toHaveLength(3)
-    expect(wrapper.find("tr:nth-child(1) > td:nth-child(2)").text()).toBe("Falcon")
-    expect(wrapper.find("tr:nth-child(1) > td:nth-child(3)").text()).toBe("12")
+    expect(wrapper.find<HTMLInputElement>("tr:nth-child(1) > td:nth-child(2) input").element.value).toBe("Falcon")
+    expect(wrapper.find<HTMLInputElement>("tr:nth-child(1) > td:nth-child(3) input").element.value).toBe("12")
 
     expect(wrapper.findAll("tr:nth-child(2) > td")).toHaveLength(3)
-    expect(wrapper.find("tr:nth-child(2) > td:nth-child(2)").text()).toBe("Antares")
-    expect(wrapper.find("tr:nth-child(2) > td:nth-child(3)").text()).toBe("42")
+    expect(wrapper.find<HTMLInputElement>("tr:nth-child(2) > td:nth-child(2) input").element.value).toBe("Antares")
+    expect(wrapper.find<HTMLInputElement>("tr:nth-child(2) > td:nth-child(3) input").element.value).toBe("42")
   })
 })

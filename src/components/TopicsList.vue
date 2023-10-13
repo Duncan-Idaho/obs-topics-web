@@ -60,7 +60,9 @@ const emit = defineEmits<{
             <button @click="emit('markAsDone', index)" v-if="!isDone">✔️</button>
             <div class="button-gap" v-else></div>
           </td>
-          <td v-for="column in columns" :key="column">{{ topic[column] }}</td>
+          <td v-for="column in columns" :key="column">
+            <input type="text" v-model="topic[column]" :size="('' + topic[column]).length + 1"/>
+          </td>
         </tr>
       </template>
     </VueDraggable>
@@ -104,5 +106,10 @@ button, .button-gap {
 .ghost {
   opacity: .7;
   background: #C8EBFB;
+}
+
+input {
+  border: 0;
+  border-bottom: 1px solid black;
 }
 </style>

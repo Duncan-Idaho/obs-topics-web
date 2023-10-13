@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
@@ -12,11 +12,47 @@ export type ColumnSelection = {
 
 export type Topics = Topic[]
 
+export type FormatsDefinitions = {
+  current: Formats;
+  next: Formats;
+}
+
+export type Formats = {
+  [column: string]: Format;
+}
+
+export type Format = {
+  pattern: string;
+  default: string;
+}
+
 export const useTopicsStore = defineStore('topics', () => {
   const headers = useStorage<string[]>('headers', [])
   const topics = useStorage<Topics>('topics', [])
   const columnDisplay = useStorage<ColumnSelection>('column-display', {})
   const topicsDone = useStorage<Topics>('topicsDone', [])
+
+  const formats = useStorage<FormatsDefinitions>('formats', {
+    current: {},
+    next: {}
+  })
+
+  const formatted = {
+    current: makeFormatted('current', 0),
+    next: makeFormatted('next', 1),
+  }
+
+  function makeFormatted(key: keyof FormatsDefinitions, index: number) {
+    const parsedFormats = computed(() => {
+      return Object.fromEntries(
+        Object.entries(formats.value[key]).map(([ key, format ]) => [key, formatParser(format)]))
+    }) 
+  
+    return computed(() => {
+      return Object.fromEntries(
+        Object.entries(parsedFormats.value).map(([ key, formatter ]) => [key, formatter(topics.value[index])]))
+    })
+  }
   
   const displayedColumns = computed({
     get: () => headers.value.filter(header => columnDisplay.value[header]),
@@ -111,16 +147,36 @@ export const useTopicsStore = defineStore('topics', () => {
     moveToIndex(fromDone, topicIndex, topics.value.length - (fromDone ? 0 : 1))
   }
 
+  function formatParser(format: Format): (topic?: Topic) => string {
+    const matches = [...format.pattern.matchAll(/(?<prefix>[^{]*)\{(?<placeholder>[^}]*)\}(?<suffix>[^{]*)/g)]
+    if (matches.length === 0)
+      return topic => topic ? format.pattern : format.default
+    
+    const recursiveFormatter = matches.reduce(
+      (acumulator, currentValue) => (topic: Topic) => {
+        return acumulator(topic)
+          + (currentValue.groups?.prefix || '')
+          + (currentValue.groups?.placeholder ? topic[currentValue.groups.placeholder] : '') 
+          + (currentValue.groups?.suffix || '')
+      },
+      (_: Topic): string => ""
+    )
+    return topic => topic ? recursiveFormatter(topic) : format.default
+  }
+
   return { 
     topics,
     headers, 
     columnDisplay, 
     displayedColumns,
     topicsDone, 
+    formats,
+    formatted,
     importRawString,
     markAsDone,
     moveToNow,
     moveToNext,
-    moveToLast
+    moveToLast,
+    formatParser
   }
 })

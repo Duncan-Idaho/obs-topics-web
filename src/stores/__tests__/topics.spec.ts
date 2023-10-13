@@ -271,4 +271,95 @@ describe('Topics store', () => {
       expect(store.topicsDone[0].Team).toBe("Falcon")
     })
   })
+
+  describe("format parser", () => {  
+    it('can format topic', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: '{Presenter(s)} ({Team})', default: 'End' })({
+        'Presenter(s)': 'Roxy',
+        'Team': 'Falcon'
+      })
+      expect(result).toBe('Roxy (Falcon)')
+    })
+
+    it('defaults if topic is undefined', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: '{Presenter(s)} ({Team})', default: 'End' })()
+      expect(result).toBe('End')
+    })
+
+    it('can format topic with leading chars', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: 'Next: {Presenter(s)} ({Team})', default: 'End' })({
+        'Presenter(s)': 'Roxy',
+        'Team': 'Falcon'
+      })
+      expect(result).toBe('Next: Roxy (Falcon)')
+    })
+
+    it('can format topic without trailing chars', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: 'Next: {Presenter(s)} - {Team}', default: 'End' })({
+        'Presenter(s)': 'Roxy',
+        'Team': 'Falcon'
+      })
+      expect(result).toBe('Next: Roxy - Falcon')
+    })
+
+    it('can format without placeholder', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: 'Presenter', default: 'End' })({
+        'Presenter(s)': 'Roxy',
+        'Team': 'Falcon'
+      })
+      expect(result).toBe('Presenter')
+    })
+
+    it('can defaults without placeholder', () => {
+      const store = useTopicsStore()
+      
+      const result = store.formatParser({ pattern: 'Presenter', default: 'End' })()
+      expect(result).toBe('End')
+    })
+  })
+
+  describe("formatters", () => {  
+    beforeEach(() => {
+      const store = useTopicsStore()
+      
+      store.importRawString(example, true)
+      store.formats = {
+        current: { 
+          presenter: { pattern: '{Presenter(s)} ({Team})', default: 'End' },
+          team: { pattern: '{Team}', default: 'End' }
+        },
+        next: {
+          team: { pattern: '{Team}', default: 'End' }
+        }
+      }
+    })
+    it('can format current', () => {
+      const store = useTopicsStore()
+      expect(store.formatted.current.presenter).toBe("Roger Ford (Star - Falcon)")
+      expect(store.formatted.current.team).toBe("Star - Falcon")
+      expect(store.formatted.next.team).toBe("Falcon")
+    })
+    it('can default', () => {
+      const store = useTopicsStore()
+      for (let i = 0; i < 7; i++)
+        store.markAsDone(0)
+      expect(store.formatted.current.presenter).toBe("Steven (Amethyst)")
+      expect(store.formatted.current.team).toBe("Amethyst")
+        
+      store.markAsDone(0)
+      expect(store.formatted.current.presenter).toBe("End")
+      expect(store.formatted.current.team).toBe("End")
+      expect(store.formatted.next.team).toBe("End")
+    })
+  })
 })

@@ -37,10 +37,8 @@ export const useTopicsStore = defineStore('topics', () => {
     next: {}
   })
 
-  const formatted = {
-    current: makeFormatted('current', 0),
-    next: makeFormatted('next', 1),
-  }
+  const currentFormatted = makeFormatted('current', 0)
+  const nextFormatted = makeFormatted('next', 1)
 
   function makeFormatted(key: keyof FormatsDefinitions, index: number) {
     const parsedFormats = computed(() => {
@@ -171,7 +169,8 @@ export const useTopicsStore = defineStore('topics', () => {
     displayedColumns,
     topicsDone, 
     formats,
-    formatted,
+    currentFormatted,
+    nextFormatted,
     importRawString,
     markAsDone,
     moveToNow,

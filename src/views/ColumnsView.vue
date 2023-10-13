@@ -1,25 +1,16 @@
 <script setup lang="ts">
 import { useTopicsStore } from '@/stores/topics';
+import ColumnsView from '@/components/ColumnsList.vue';
+import FormattersListVue from '@/components/FormattersList.vue';
 
 const store = useTopicsStore()
 </script>
 
 <template>
-  <ul>
-    <li v-for="header in store.headers" :key="header">
-      <input type="checkbox" :id="header" v-model="store.columnDisplay[header]"/>
-      <label :for="header">{{ header }}</label>
-    </li>
-  </ul>
+  <ColumnsView v-if="store.headers.length"/>
+  <FormattersListVue title="Current formatters" format-type="current"/>
+  <FormattersListVue title="Next formatters" format-type="next"/>
 </template>
 
 <style scoped>
-ul {
-  list-style-type: none;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-inline-start: 0;
-}
 </style>

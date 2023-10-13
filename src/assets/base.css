@@ -88,3 +88,17 @@ body {
 input[type=checkbox] {
   margin: 0.5em;
 }
+
+input[type=text] {
+  border: 0;
+  border-bottom: 1px solid black;
+}
+
+ul {
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}

@@ -107,9 +107,4 @@ button, .button-gap {
   opacity: .7;
   background: #C8EBFB;
 }
-
-input {
-  border: 0;
-  border-bottom: 1px solid black;
-}
 </style>

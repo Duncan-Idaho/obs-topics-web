@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useTopicsStore, type Formats, type FormatsDefinitions } from '@/stores/topics';
+import { useTopicsStore, type FormatsDefinitions } from '@/stores/topics';
 import { computed, ref } from 'vue';
+import FormattersEntry from './FormattersEntry.vue'
 
 const props = defineProps<{
   title: string,
@@ -28,19 +29,14 @@ const store = useTopicsStore()
 <template>
   <h2>{{ title }}</h2>
   <ul>
-    <li v-for="(format, id) in formats" :key="id">
-      <div>
-        <label :for="'format-' + id + '-pattern'" class="id">{{ id }}: </label>
-        <input type="text" :id="id + '-pattern'" v-model="format.pattern"/>
-      </div>
-      <div>
-        <label :for="'format-' + id + '-default'">&nbsp;&mdash; Default value</label>
-        <input type="text" :id="id + '-default'" v-model="format.default"/>
-      </div>
-      <div>
-        <button @click="delete formats[id]">Delete</button>
-      </div>
-    </li>
+    <FormattersEntry 
+      v-for="(format, id) in formats" 
+      :key="id"
+      :id="id + ''"
+      :format="format"
+      :format-type="formatType"
+      @delete="id => delete formats[id]"
+    />
   </ul>
   <div class="add-panel">
     <input type="text" id="add-id'" placeholder="Identifier" v-model="newId"/>
@@ -51,17 +47,9 @@ const store = useTopicsStore()
 </template>
 
 <style scoped>
-li, li > div, .add-panel {
+.add-panel {
   display: flex;
   flex-direction: row;
-  gap: 0.5em;
-}
-
-label.id {
-  width: 10em;
-}
-
-.add-panel {
   gap: 1em;
   margin: 1em 0em;
 }

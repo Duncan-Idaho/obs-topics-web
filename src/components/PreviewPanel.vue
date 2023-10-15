@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { useTopicsStore } from '@/stores/topics';
-import ColumnsView from '@/components/ColumnsList.vue';
-import FormattersListVue from '@/components/FormattersList.vue';
 import FormattedText from './FormattedText.vue';
 import StartTime from './StartTime.vue';
 

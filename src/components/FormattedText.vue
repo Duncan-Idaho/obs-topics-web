@@ -7,8 +7,7 @@ defineProps<{ text: string }>()
 const container = ref<HTMLElement | null>(null)
 
 function fitText() {
-  if (container.value) {
-    console.log("resizing")
+  if (container.value && container.value.offsetParent !== null) {
     textfit(container.value, {
       minFontSize: 0,
       maxFontSize: 400,
@@ -16,9 +15,6 @@ function fitText() {
       alignHoriz: true,
       multiLine: true
     })
-  } else {
-    
-    console.log("container not available")
   }
 }
 

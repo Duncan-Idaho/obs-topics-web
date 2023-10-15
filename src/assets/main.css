@@ -7,21 +7,6 @@
   display: flex;
   flex-flow: column;
   height: 100vh;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-}
-
-@media (min-width: 800px) {
-  #app {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-@media (min-height: 800px) {
-  #app {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
 }
 
 main {

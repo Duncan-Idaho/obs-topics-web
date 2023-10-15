@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTopicsStore } from '@/stores/topics';
 import TopicsList from '@/components/TopicsList.vue'
-import PreviewPanel from '@/components/PreviewPanel.vue'
 
 import { DragRow } from "vue-resizer";
 import StartTimePanel from '@/components/StartTimePanel.vue';
@@ -12,12 +11,6 @@ const store = useTopicsStore()
 <template>
   <StartTimePanel/>
   <template v-if="store.displayedColumns.length">
-    <div class="preview-button">
-      👁
-      <div class="preview-panel">
-        <PreviewPanel/>
-      </div>
-    </div>
     <DragRow :top-percent="66" width="100%" height="100%" :slider-width="8">
       <template #top>
         <TopicsList 
@@ -53,34 +46,5 @@ const store = useTopicsStore()
 <style scoped>
 :deep(.drager_top > div), :deep(.drager_bottom > div) {
   overflow: auto;
-}
-
-
-.preview-button {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  cursor: help;
-}
-
-.preview-panel {
-  visibility: hidden;
-
-  position: absolute;
-  z-index: 1;
-  overflow: hidden;
-  top: 1em;
-  right: 1em;
-  cursor: help;
-  
-  background: white;
-  width: 50vh;
-  padding: 1em;
-  border: 1px solid black;
-
-}
-
-.preview-button:hover .preview-panel {
-  visibility: visible;
 }
 </style>

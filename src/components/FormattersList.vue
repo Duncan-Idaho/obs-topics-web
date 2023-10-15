@@ -2,6 +2,7 @@
 import { useTopicsStore, type FormatsDefinitions } from '@/stores/topics';
 import { computed, ref } from 'vue';
 import FormattersEntry from './FormattersEntry.vue'
+import FormattersAdd from './FormattersAdd.vue'
 
 const props = defineProps<{
   title: string,
@@ -37,13 +38,8 @@ const store = useTopicsStore()
       :format-type="formatType"
       @delete="id => delete formats[id]"
     />
+    <FormattersAdd :format-type="formatType"/>
   </ul>
-  <div class="add-panel">
-    <input type="text" id="add-id'" placeholder="Identifier" v-model="newId"/>
-    <input type="text" id="add-pattern" placeholder="Pattern" v-model="newPattern"/>
-    <input type="text" id="add-default" placeholder="Default Value" v-model="newDefault"/>
-    <button @click="add">Add</button>
-  </div>
 </template>
 
 <style scoped>
@@ -52,5 +48,35 @@ const store = useTopicsStore()
   flex-direction: row;
   gap: 1em;
   margin: 1em 0em;
+}
+
+ul {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  gap: 0.6em;
+  padding: 0.6em 0em;
+}
+
+:deep(li) {
+  border: 1px solid var(--vt-c-divider-dark-2);
+  /* margin: 0.3em; */
+  padding: 0.3em 1em 0.3em 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+:deep(.action-button) {
+  justify-self: stretch;
+  margin: 0.5em 0em;
+}
+
+:deep(label) {
+  width: 8em;
+}
+
+:deep(div) {
+  display: flex;
+  gap: 0.5em;
 }
 </style>

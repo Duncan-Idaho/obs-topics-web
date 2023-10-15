@@ -32,19 +32,19 @@ const { href, copy, isSupported } = useCopyLink('start')
       text-input 
       auto-apply
       class="time-picker"
+      input-class-name="dense-date-picker-input"
+      dark
     />
   </div>
 </template>
 
-<style>
-.title {
-  gap: 1em;
-}
-.copy {
-  align-self: center;
-}
+<style scoped>
 div {
   display: flex;
+  margin: 0.5em 0em 0.1em 0em;
+}
+.title {
+  gap: 1em;
 }
 label {
   width: 11em;

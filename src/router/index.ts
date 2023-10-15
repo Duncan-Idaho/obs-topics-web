@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TopicsView from '../views/TopicsView.vue'
-import StandardLayout from '../StandardLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,12 +18,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: StandardLayout,
+      component: () => import('../StandardLayout.vue'),
       children: [
         {
           path: '/',
           name: 'topics',
-          component: TopicsView
+          component: () => import('../views/TopicsView.vue')
         },
         {
           path: '/import',
@@ -36,6 +34,11 @@ const router = createRouter({
           path: '/columns',
           name: 'columns',
           component: () => import('../views/ColumnsView.vue')
+        },
+        {
+          path: '/settings',
+          name: 'settings',
+          component: () => import('../views/SettingsView.vue')
         },
       ]
     }

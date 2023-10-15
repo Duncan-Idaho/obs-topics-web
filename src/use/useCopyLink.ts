@@ -10,5 +10,5 @@ export function useCopyLink(to: MaybeRefOrGetter<RouteLocationRaw>) {
     return (new URL(href, document.location.href)).href
   })
     
-  return useClipboard({ source: href })
+  return {...useClipboard({ source: href }), href}
 }

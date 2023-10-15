@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import PreviewTooltip from '@/components/PreviewTooltip.vue'
 </script>
 
 <template>
   <header>
+    <PreviewTooltip/>
     <nav>
       <RouterLink to="/import">Import</RouterLink>
       <RouterLink to="/">Topics</RouterLink>
       <RouterLink to="/columns">Columns displayed</RouterLink>
+      <RouterLink to="/settings">Settings</RouterLink>
     </nav>
   </header>
 
@@ -19,6 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 header {
   line-height: 1.5;
+  display: flex;
 }
 
 nav {

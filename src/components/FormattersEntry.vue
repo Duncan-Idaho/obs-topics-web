@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useTopicsStore, type Format, type FormatsDefinitions } from '@/stores/topics';
-import { computed } from 'vue';
-import { useClipboard } from '@vueuse/core'
-import router from '@/router';
+import { type Format, type FormatsDefinitions } from '@/stores/topics';
 import { useCopyLink } from '@/use/useCopyLink';
 
 const props = defineProps<{
@@ -22,38 +19,22 @@ const { href, copy, isSupported } = useCopyLink(() => ({
 const emit = defineEmits<{
   (e: 'delete', id: string): void
 }>()
-
-const store = useTopicsStore()
 </script>
 
 <template>
   <li>
     <div>
-      <label :for="'format-' + id + '-pattern'" class="id">{{ id }}: </label>
+      <h3>{{ id }}</h3>
+      <button v-if="isSupported" @click="() => copy(href)" class="copy">📋</button>
+    </div>
+    <div>
+      <label :for="'format-' + id + '-pattern'">Pattern:</label>
       <input type="text" :id="id + '-pattern'" v-model="format.pattern"/>
     </div>
     <div>
-      <label :for="'format-' + id + '-default'">&nbsp;&mdash; Default value</label>
+      <label :for="'format-' + id + '-default'">Default value:</label>
       <input type="text" :id="id + '-default'" v-model="format.default"/>
     </div>
-    <div>
-      <button @click="() => emit('delete', id)">Delete</button>
-    </div>
-    <div>
-      <button v-if="isSupported" @click="() => copy(href)">📋</button>
-      <template v-else>Your does not support Clipboard API</template>
-    </div>
+    <button @click="() => emit('delete', id)" class="action-button">Delete</button>
   </li>
 </template>
-
-<style scoped>
-li, div {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5em;
-}
-
-label.id {
-  width: 10em;
-}
-</style>

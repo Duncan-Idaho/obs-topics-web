@@ -24,6 +24,8 @@ export type Formats = {
 export type Format = {
   pattern: string;
   default: string;
+  color: string;
+  font: string;
 }
 
 export const useTopicsStore = defineStore('topics', () => {

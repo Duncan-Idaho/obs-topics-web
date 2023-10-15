@@ -35,7 +35,7 @@ const previewPanel = ref<HTMLElement | null>(null)
   left: 1em;
   
   background: var(--color-background-mute);
-  width: 50vh;
+  width: 25em;
   padding: 1em;
   border: 1px solid black;
 }

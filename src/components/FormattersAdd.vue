@@ -11,12 +11,16 @@ const formats = computed(() => store.formats[props.formatType])
 const newId = ref('')
 const newPattern = ref('')
 const newDefault = ref('')
+const newColor = ref('')
+const newFont = ref('')
 
 function add() {
   if (newId.value && newPattern.value) {
     formats.value[newId.value] = { 
       pattern: newPattern.value,
-      default: newDefault.value
+      default: newDefault.value,
+      color: newColor.value,
+      font: newFont.value      
     }
   }
 }
@@ -35,7 +39,15 @@ const store = useTopicsStore()
     </div>
     <div>
       <label :for="formatType + 'add-default'">Default value:</label>
-    <input type="text" :id="formatType + 'add-default'" placeholder="Default Value" v-model="newDefault"/>
+      <input type="text" :id="formatType + 'add-default'" placeholder="Default Value" v-model="newDefault"/>
+    </div>
+    <div>
+      <label :for="formatType + 'add-color'">Text color:</label>
+      <input type="text" :id="formatType + 'add-color'" v-model="newColor"/>
+    </div>
+    <div>
+      <label :for="formatType + 'add-font'">Text font:</label>
+      <input type="text" :id="formatType + 'add-font'" v-model="newFont"/>
     </div>
     <button @click="add" class="action-button">Add</button>
   </li>

@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import { onUpdated, ref, onMounted, onBeforeUnmount } from 'vue';
+import { onUpdated, ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import textfit from 'textfit'
 
 const props = defineProps<{ 
   text: string;
-  preview?: boolean; 
+  preview?: boolean;
+  color?: string;
+  font?: string;
 }>()
 
 const container = ref<HTMLElement | null>(null)
+
+const style = computed(() => ({
+  color: props.color ?? undefined,
+  fontFamily: props.font ?? undefined
+}))
 
 function fitText() {
   if (!props.preview && container.value && container.value.offsetParent !== null) {
@@ -34,7 +41,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="container">
+  <div ref="container" :style="style">
     {{ text }}
   </div>
 </template>

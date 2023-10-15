@@ -10,11 +10,15 @@ export const useStartTimeStore = defineStore('startTime', () => {
   })
   const format = useStorage('start-time-format', 'mm:ss')
   const pastFormat = useStorage('start-time-past-format', '[IN A SEC]')
+  const color = useStorage('start-time-color', '')
+  const font = useStorage('start-time-font', '')
 
   return { 
     startTime,
     defaultStartTime,
     format,
-    pastFormat
+    pastFormat,
+    color,
+    font
   }
 })

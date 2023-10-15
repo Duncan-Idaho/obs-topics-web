@@ -10,20 +10,6 @@ const props = defineProps<{
 }>()
 
 const formats = computed(() => store.formats[props.formatType])
-
-const newId = ref('')
-const newPattern = ref('')
-const newDefault = ref('')
-
-function add() {
-  if (newId.value && newPattern.value) {
-    formats.value[newId.value] = { 
-      pattern: newPattern.value,
-      default: newDefault.value
-    }
-  }
-}
-
 const store = useTopicsStore()
 </script>
 

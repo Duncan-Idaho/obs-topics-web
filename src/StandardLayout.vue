@@ -27,6 +27,7 @@ import PreviewTooltip from '@/components/PreviewTooltip.vue'
   flex-flow: column;
   height: 100vh;
   background: var(--color-background);
+  color: var(--color-text);
   padding-left: 0.4rem;
   padding-right: 0.4rem;
 }

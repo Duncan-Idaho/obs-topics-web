@@ -11,37 +11,49 @@ const { href, copy, isSupported } = useCopyLink('start')
 </script>
 
 <template>
-  <div class="title">
-    <h2>Start time</h2>
-    <button v-if="isSupported" @click="() => copy(href)" class="copy">📋</button>
-    <span v-else>Your does not support Clipboard API</span>
-  </div>
-  <div>
-    <label for="format">Format: </label>
-    <input type="text" id="format" v-model="store.format"/>
-  </div>
-  <div>
-    <label for="past-format">Format when due past: </label>
-    <input type="text" id="past-format" v-model="store.pastFormat"/>
-  </div>
-  <div>
-    <label for="default-start-time">Default start time: </label>
-    <VueDatePicker 
-      v-model="store.defaultStartTime" 
-      time-picker
-      text-input 
-      auto-apply
-      class="time-picker"
-      input-class-name="dense-date-picker-input"
-      dark
-    />
+  <div class="section">
+    <div class="title">
+      <h2>Start time</h2>
+      <button v-if="isSupported" @click="() => copy(href)" class="copy">📋</button>
+      <span v-else>Your does not support Clipboard API</span>
+    </div>
+    <div>
+      <label for="format">Format: </label>
+      <input type="text" id="format" v-model="store.format"/>
+    </div>
+    <div>
+      <label for="past-format">Format when due past: </label>
+      <input type="text" id="past-format" v-model="store.pastFormat"/>
+    </div>
+    <div>
+      <label for="color">Color: </label>
+      <input type="text" id="color" v-model="store.color"/>
+    </div>
+    <div>
+      <label for="past-font">Font: </label>
+      <input type="text" id="past-font" v-model="store.font"/>
+    </div>
+    <div>
+      <label for="default-start-time">Default start time: </label>
+      <VueDatePicker 
+        v-model="store.defaultStartTime" 
+        time-picker
+        text-input 
+        auto-apply
+        class="time-picker"
+        input-class-name="dense-date-picker-input"
+        dark
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
-div {
+.section {
+  margin-bottom: 1em;
+}
+.section div {
   display: flex;
-  margin: 0.5em 0em 0.1em 0em;
 }
 .title {
   gap: 1em;

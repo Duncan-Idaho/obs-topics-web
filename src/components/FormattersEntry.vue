@@ -35,6 +35,14 @@ const emit = defineEmits<{
       <label :for="'format-' + id + '-default'">Default value:</label>
       <input type="text" :id="id + '-default'" v-model="format.default"/>
     </div>
+    <div>
+      <label :for="'format-' + id + '-color'">Text color:</label>
+      <input type="text" :id="id + '-color'" v-model="format.color"/>
+    </div>
+    <div>
+      <label :for="'format-' + id + '-font'">Text font:</label>
+      <input type="text" :id="id + '-font'" v-model="format.font"/>
+    </div>
     <button @click="() => emit('delete', id)" class="action-button">Delete</button>
   </li>
 </template>

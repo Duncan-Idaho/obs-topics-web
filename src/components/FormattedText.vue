@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { useTopicsStore, type FormatsDefinitions } from '@/stores/topics';
 import { onUpdated, ref, onMounted, onBeforeUnmount } from 'vue';
 import textfit from 'textfit'
 
-const props = defineProps<{
-  formatType: keyof FormatsDefinitions,
-  id: string
-}>()
-
-const store = useTopicsStore()
+defineProps<{ text: string }>()
 
 const container = ref<HTMLElement | null>(null)
 
@@ -42,12 +36,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="container">
-    <template v-if="formatType === 'current'">
-      {{ store.currentFormatted[id] }}
-    </template>
-    <template v-if="formatType === 'next'">
-      {{ store.nextFormatted[id] }}
-    </template>
+    {{ text }}
   </div>
 </template>
 

@@ -12,6 +12,12 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/start',
+      name: 'start',
+      component: () => import('../views/StartTimeView.vue'),
+      props: true
+    },
+    {
       path: '/',
       name: 'main',
       component: StandardLayout,

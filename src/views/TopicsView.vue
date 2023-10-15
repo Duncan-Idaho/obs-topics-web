@@ -4,11 +4,13 @@ import TopicsList from '@/components/TopicsList.vue'
 import PreviewPanel from '@/components/PreviewPanel.vue'
 
 import { DragRow } from "vue-resizer";
+import StartTimePanel from '@/components/StartTimePanel.vue';
 
 const store = useTopicsStore()
 </script>
 
 <template>
+  <StartTimePanel/>
   <template v-if="store.displayedColumns.length">
     <div class="preview-button">
       👁

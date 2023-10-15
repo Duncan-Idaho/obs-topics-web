@@ -11,7 +11,8 @@ const store = useTopicsStore()
 </script>
 
 <template>
-  <FormattedText :format-type="formatType" :id="id"/>
+  <FormattedText v-if="formatType === 'current'" :text="store.currentFormatted[id]"/>
+  <FormattedText v-if="formatType === 'next'" :text="store.nextFormatted[id]"/>
 </template>
 
 <style scoped>

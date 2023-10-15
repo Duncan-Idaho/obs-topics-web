@@ -51,7 +51,7 @@ const emit = defineEmits<{
             <button @click="emit('moveToNow', index)" v-if="isDone || index !== 0">▶️</button>
             <div class="button-gap" v-else></div>
 
-            <button @click="emit('moveToNext', index)" v-if="isDone || index !== 1">⏱️</button>
+            <button @click="emit('moveToNext', index)" v-if="isDone || index !== 1">2️⃣</button>
             <div class="button-gap" v-else></div>
 
             <button @click="emit('moveToLast', index)" v-if="isDone || index !== modelValue.length - 1">⏬</button>

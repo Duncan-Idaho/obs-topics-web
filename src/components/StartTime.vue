@@ -14,8 +14,12 @@ const duration = useDuration(
     pastformat: storeRefs.pastFormat,
   }
 )
+
+defineProps<{ 
+  preview?: boolean; 
+}>()
 </script>
 
 <template>
-  <FormattedText :text="duration"/>
+  <FormattedText :text="duration" :preview="preview"/>
 </template>

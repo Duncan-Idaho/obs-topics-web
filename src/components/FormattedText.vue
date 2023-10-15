@@ -2,12 +2,15 @@
 import { onUpdated, ref, onMounted, onBeforeUnmount } from 'vue';
 import textfit from 'textfit'
 
-defineProps<{ text: string }>()
+const props = defineProps<{ 
+  text: string;
+  preview?: boolean; 
+}>()
 
 const container = ref<HTMLElement | null>(null)
 
 function fitText() {
-  if (container.value && container.value.offsetParent !== null) {
+  if (!props.preview && container.value && container.value.offsetParent !== null) {
     textfit(container.value, {
       minFontSize: 0,
       maxFontSize: 400,

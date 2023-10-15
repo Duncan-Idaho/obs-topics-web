@@ -10,25 +10,41 @@ const store = useTopicsStore()
   <h2>Current Formatters</h2>
   <ul>
     <li v-for="(_, id) in store.currentFormatted">
-      <div>{{ id }}:</div>
-      <FormattedText :text="store.currentFormatted[id]"/>
+      <div class="header">{{ id }}:</div>
+      <FormattedText :text="store.currentFormatted[id]" preview/>
     </li>
   </ul>
   <h2>Next Formatters</h2>
   <ul>
     <li v-for="(_, id) in store.nextFormatted">
-      <div>{{ id }}:</div>
-      <FormattedText :text="store.nextFormatted[id]"/>
+      <div class="header">{{ id }}:</div>
+      <FormattedText :text="store.nextFormatted[id]" preview/>
     </li>
   </ul>
   <h2>Start Time</h2>
-  <StartTime />
+  <div class="start-time-block">
+    <div class="header">Starting in:</div>
+    <StartTime preview />
+  </div>
 </template>
 
 <style scoped>
-li {
+ul {
+  margin: 0.5em 0em;
+}
+
+.start-time-block {
+  margin-top: 0.5em;
+}
+
+li, .start-time-block {
   display: flex;
   flex-direction: row;
   gap: 1em;
+  height: 2em;
+}
+
+.header {
+  width: 10em;
 }
 </style>

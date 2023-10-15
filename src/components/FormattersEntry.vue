@@ -3,6 +3,7 @@ import { useTopicsStore, type Format, type FormatsDefinitions } from '@/stores/t
 import { computed } from 'vue';
 import { useClipboard } from '@vueuse/core'
 import router from '@/router';
+import { useCopyLink } from '@/use/useCopyLink';
 
 const props = defineProps<{
   id: string,
@@ -10,20 +11,13 @@ const props = defineProps<{
   formatType: keyof FormatsDefinitions
 }>()
 
-const href = computed(() => {
-  
-  const { href } = router.resolve({
-    name: 'label', 
-    params: { 
-      id: props.id,
-      formatType: props.formatType
-    }
-  })
-
-  return (new URL(href, document.location.href)).href
-})
-  
-const { copy, isSupported } = useClipboard({ source: href })
+const { href, copy, isSupported } = useCopyLink(() => ({
+  name: 'label', 
+  params: { 
+    id: props.id,
+    formatType: props.formatType
+  }
+}))
 
 const emit = defineEmits<{
   (e: 'delete', id: string): void

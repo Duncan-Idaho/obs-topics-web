@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import router from '@/router';
 import { useStartTimeStore } from '@/stores/startTime'
+import { useCopyLink } from '@/use/useCopyLink';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { useClipboard } from '@vueuse/core';
-import { computed } from 'vue';
 
 const store = useStartTimeStore()
 
-const href = computed(() => {
-  const { href } = router.resolve('start')
-  return (new URL(href, document.location.href)).href
-})
-  
-const { copy, isSupported } = useClipboard({ source: href })
+const { href, copy, isSupported } = useCopyLink('start')
+
 </script>
 
 <template>

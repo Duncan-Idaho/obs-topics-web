@@ -26,7 +26,7 @@ describe('Topics store', () => {
     expect(store.headers).toEqual(expectedColumns)
   })
   
-  it('can parse topics, stopping at empty lines', () => {
+  it('can parse topics, stopping at empty lines, ordering by orders', () => {
     const store = useTopicsStore()
     store.importRawString(example, true)
     expect(store.topics).toHaveLength(8)

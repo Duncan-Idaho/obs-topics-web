@@ -37,6 +37,14 @@ export const useTopicsStore = defineStore('topics', () => {
     topics.value = lines.slice(1)
         .map((entry, index) => parseTopicEntry(entry, index));
 
+    topics.value.sort((topicLeft, topicRight) => getOrder(topicLeft) - getOrder(topicRight))
+
+    function getOrder(topic: Topic): number {
+      return typeof topic.Order === "number"
+        ? topic.Order
+        : Number.MAX_VALUE
+    }
+
     function splitLines(rawString: string): string[] {
       const allTopicLines = rawString.split('\n')
 

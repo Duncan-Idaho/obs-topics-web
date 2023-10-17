@@ -34,27 +34,29 @@ function setInOffsetMinutes(minutes: number) {
 <template>
   <div class="panel">
     <div class="header">Starts:</div>
-    <div>
-      <VueDatePicker 
-        v-model="store.startTime" 
-        model-type="timestamp"
-        :preset-dates="presetDates"
-        text-input 
-        enable-seconds
-        :flow="['calendar', 'time']"
-        auto-apply
-        class="date-picker"
-        input-class-name="dense-date-picker-input"
-        dark
-      />
+      <div class="controls">
+      <div>
+        <VueDatePicker 
+          v-model="store.startTime" 
+          model-type="timestamp"
+          :preset-dates="presetDates"
+          text-input 
+          enable-seconds
+          :flow="['calendar', 'time']"
+          auto-apply
+          class="date-picker"
+          input-class-name="dense-date-picker-input"
+          dark
+        />
+      </div>
+      <div class="postponing">      
+        <div class="clock">⏱️</div>
+        <button @click="setInOffsetSeconds(5)">5s</button>
+        <button @click="setInOffsetMinutes(1)">1m</button>
+        <button @click="setInOffsetMinutes(2)">2m</button>
+        <button @click="setInOffsetMinutes(5)">5m</button>
+      </div>
     </div>
-    <div class="postponing">      
-      <div class="clock">⏱️</div>
-      <button @click="setInOffsetSeconds(5)">5s</button>
-      <button @click="setInOffsetMinutes(1)">1m</button>
-      <button @click="setInOffsetMinutes(2)">2m</button>
-      <button @click="setInOffsetMinutes(5)">5m</button>
-  </div>
   </div>
 </template>
 
@@ -64,6 +66,11 @@ function setInOffsetMinutes(minutes: number) {
   gap: 0.5em;
   margin-left: 0.2em;
   margin-bottom: 0.5em;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
 }
 .header {
   font-weight: bold;

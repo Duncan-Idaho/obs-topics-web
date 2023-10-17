@@ -38,9 +38,12 @@ const store = useTopicsStore()
       </template>
     </DragRow>
   </template>
-  <template v-else>
+  <div v-else-if="store.topics.length">
     Go to <RouterLink to="/columns">Columns displayed</RouterLink> to choose which columns should be displayed
-  </template>
+  </div>
+  <div v-else>
+    Go to <RouterLink to="/import">Import</RouterLink> to add topics
+  </div>
 </template>
 
 <style scoped>

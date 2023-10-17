@@ -1,13 +1,33 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useMediaQuery } from '@vueuse/core'
 import PreviewTooltip from '@/components/PreviewTooltip.vue'
+import { computed, ref } from 'vue';
+
+const largeWidth = useMediaQuery('(min-width: 28em)')
+const menuOpened = ref(false)
+const displayMenu = computed (() => largeWidth.value || menuOpened.value)
+
+const menu = ref<HTMLElement | null>(null)
+
+function closeMenu() {
+  menuOpened.value = false
+}
 </script>
 
 <template>
-  <div class="standard-layout">
+  <div class="standard-layout" @click="closeMenu">
     <header>
       <PreviewTooltip/>
-      <nav>
+      <a
+        v-if="!largeWidth"
+        class="menu-toggle"
+        @click.stop="menuOpened = !menuOpened">
+        <span v-if="menuOpened">⯆</span>
+        <span v-else>⯈</span>
+        Menu
+      </a> 
+      <nav v-if="displayMenu" ref="menu">
         <RouterLink to="/import">Import</RouterLink>
         <RouterLink to="/">Topics</RouterLink>
         <RouterLink to="/columns">Columns displayed</RouterLink>
@@ -48,13 +68,29 @@ import PreviewTooltip from '@/components/PreviewTooltip.vue'
 header {
   line-height: 1.5;
   display: flex;
+  position: relative;
 }
 
-nav {
+.menu-toggle {
   width: 100%;
   font-size: 1em;
   text-align: center;
   margin-bottom: 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+nav {
+  font-size: 1em;
+  text-align: center;
+
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  top: 1.5em;
+  z-index: 2;
+  background-color: var(--vt-c-black-soft);
+  border: 1px solid var(--color-border);
 }
 
 nav a.router-link-exact-active {
@@ -66,12 +102,34 @@ nav a.router-link-exact-active:hover {
 }
 
 nav a {
-  display: inline-block;
+  display: block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
 }
 
 nav a:first-of-type {
   border: 0;
+}
+
+
+@media (min-width: 28em) {
+  nav {
+    position: initial;
+    background-color: transparent;
+    border: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-top: 0;
+    border-left: 1px solid var(--color-border);
+  }
+
+  nav a:first-of-type {
+    border: 0;
+  }
 }
 </style>

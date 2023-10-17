@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { useTopicsStore, type FormatsDefinitions } from '@/stores/topics';
-import { computed, ref } from 'vue';
-
-const props = defineProps<{
-  formatType: keyof FormatsDefinitions,
-}>()
-
-const formats = computed(() => store.formats[props.formatType])
+import { ref } from 'vue';
 
 const newId = ref('')
 const newPattern = ref('')
@@ -14,9 +8,9 @@ const newDefault = ref('')
 const newColor = ref('')
 const newFont = ref('')
 
-function add() {
+function add(format: keyof FormatsDefinitions) {
   if (newId.value && newPattern.value) {
-    formats.value[newId.value] = { 
+    store.formats[format][newId.value] = {
       pattern: newPattern.value,
       default: newDefault.value,
       color: newColor.value,
@@ -29,31 +23,41 @@ const store = useTopicsStore()
 </script>
 
 <template>
-  <li>
+  <h2>Add formatter</h2>
+  <div class="add-panel">
     <div>
-      <input type="text" :id="formatType + 'add-id'" class="add-id" placeholder="Identifier" v-model="newId"/>
+      <input type="text" id="add-id" class="add-id" placeholder="Identifier" v-model="newId"/>
     </div>
     <div>
-      <label :for="formatType + 'add-pattern'">Pattern:</label>
-      <input type="text" :id="formatType + 'add-pattern'" placeholder="Pattern" v-model="newPattern"/>
+      <label for="add-pattern">Pattern:</label>
+      <input type="text" id="add-pattern" placeholder="Pattern" v-model="newPattern"/>
     </div>
     <div>
-      <label :for="formatType + 'add-default'">Default value:</label>
-      <input type="text" :id="formatType + 'add-default'" placeholder="Default Value" v-model="newDefault"/>
+      <label for="add-default">Default value:</label>
+      <input type="text" id="add-default" placeholder="Default Value" v-model="newDefault"/>
     </div>
     <div>
-      <label :for="formatType + 'add-color'">Text color:</label>
-      <input type="text" :id="formatType + 'add-color'" v-model="newColor"/>
+      <label for="add-color">Text color:</label>
+      <input type="text" id="add-color" v-model="newColor"/>
     </div>
     <div>
-      <label :for="formatType + 'add-font'">Text font:</label>
-      <input type="text" :id="formatType + 'add-font'" v-model="newFont"/>
+      <label for="add-font">Text font:</label>
+      <input type="text" id="add-font" v-model="newFont"/>
     </div>
-    <button @click="add" class="action-button">Add</button>
-  </li>
+    <div>
+      <button @click="add('current')" class="action-button">Add current</button>
+      <button @click="add('next')" class="action-button">Add next</button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+@import "@/assets/formatter-card.css";
+
+.add-panel {
+  align-self: flex-start;
+}
+
 .add-id {
   font-size: 1.17em;
   margin: 0.13em 0em;

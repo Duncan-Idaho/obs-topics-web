@@ -47,3 +47,7 @@ const emit = defineEmits<{
   </li>
 </template>
 
+<style scoped>
+@import "@/assets/formatter-card.css";
+</style>
+

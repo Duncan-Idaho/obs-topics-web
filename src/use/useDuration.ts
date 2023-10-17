@@ -1,4 +1,4 @@
-import { type MaybeRefOrGetter, type Ref, computed, toValue, type ComputedRef } from "vue"
+import { type MaybeRefOrGetter, computed, toValue, type ComputedRef } from "vue"
 import { useDurationFormat, type UseDurationFormatOptions } from "./useDurationFormat"
 
 /**

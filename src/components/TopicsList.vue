@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Topic, Topics } from '@/stores/topics';
+import type { Topics } from '@/stores/topics';
 import VueDraggable from "vuedraggable"
 
 defineProps<{

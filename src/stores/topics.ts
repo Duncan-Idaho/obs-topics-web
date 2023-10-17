@@ -1,4 +1,4 @@
-import { ref, computed, type Ref } from 'vue'
+import { computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
@@ -24,8 +24,8 @@ export type Formats = {
 export type Format = {
   pattern: string;
   default: string;
-  color: string;
-  font: string;
+  color?: string;
+  font?: string;
 }
 
 export const useTopicsStore = defineStore('topics', () => {

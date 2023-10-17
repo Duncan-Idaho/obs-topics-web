@@ -1,4 +1,3 @@
-import { ref, computed, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 

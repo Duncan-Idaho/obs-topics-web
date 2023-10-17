@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTopicsStore, type FormatsDefinitions } from '@/stores/topics';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import FormattersEntry from './FormattersEntry.vue'
 import FormattersAdd from './FormattersAdd.vue'
 

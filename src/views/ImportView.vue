@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTopicsStore } from '@/stores/topics';
 import { ref } from 'vue';
+import router from '@/router';
 
 const rawLines = ref('')
 const shouldStopImportAtFirstEmptyLine = ref(true)
@@ -9,6 +10,11 @@ const store = useTopicsStore()
 
 function importRawString() {
   store.importRawString(rawLines.value, shouldStopImportAtFirstEmptyLine.value)
+  router.push({ 
+    name: store.displayedColumns.length
+      ? 'topics'  
+      : 'columns'
+  })
 }
 </script>
 

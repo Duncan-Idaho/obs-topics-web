@@ -17,8 +17,9 @@ function closeMenu() {
 
 <template>
   <div class="standard-layout" @click="closeMenu">
+    <PreviewTooltip/>
+
     <header>
-      <PreviewTooltip/>
       <a
         v-if="!largeWidth"
         class="menu-toggle"
@@ -43,8 +44,11 @@ function closeMenu() {
 
 <style scoped>
 .standard-layout {
-  display: flex;
-  flex-flow: column;
+  display: grid;
+  grid: auto 1fr / auto 1fr;
+  grid: "tool menu" auto
+        "main main" 1fr
+        / auto 1fr;
   height: 100vh;
   background: var(--color-background);
   color: var(--color-text);
@@ -68,6 +72,16 @@ function closeMenu() {
 header {
   line-height: 1.5;
   display: flex;
+  position: relative;
+  grid-area: menu;
+}
+
+main {
+  grid-area: main;
+  overflow: auto;
+  
+  display: flex;
+  flex-flow: column;
   position: relative;
 }
 

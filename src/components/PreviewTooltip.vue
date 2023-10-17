@@ -25,6 +25,8 @@ const previewPanel = ref<HTMLElement | null>(null)
 .preview-button {
   position: relative;
   cursor: help;
+  margin-right: 0.5em;
+  grid-area: tool;
 }
 
 .preview-panel {

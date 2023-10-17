@@ -9,15 +9,6 @@
   height: 100vh;
 }
 
-main {
-  flex: 1;
-  overflow: auto;
-  
-  display: flex;
-  flex-flow: column;
-  position: relative;
-}
-
 a,
 .green {
   text-decoration: none;

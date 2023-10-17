@@ -1,7 +1,9 @@
 import router from '@/router';
-import { useClipboard } from '@vueuse/core';
+import { useClipboard, usePermission } from '@vueuse/core';
 import { computed, toValue, type MaybeRefOrGetter } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
+
+const permissionWrite = usePermission('clipboard-write')
 
 export function useCopyLink(to: MaybeRefOrGetter<RouteLocationRaw>) {
   const href = computed(() => {
@@ -9,6 +11,19 @@ export function useCopyLink(to: MaybeRefOrGetter<RouteLocationRaw>) {
 
     return (new URL(href, document.location.href)).href
   })
-    
-  return {...useClipboard({ source: href }), href}
+
+  function legacyCopyInput(input: MaybeRefOrGetter<HTMLInputElement | null>) {
+    const element = toValue(input)
+    if (element) {
+      element.select()
+      document.execCommand("copy");
+    }
+  }
+
+  return {
+    ...useClipboard({ source: href }), 
+    href,
+    isGranted: permissionWrite.value === 'granted',
+    legacyCopyInput
+  }
 }

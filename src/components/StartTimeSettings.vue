@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import { useStartTimeStore } from '@/stores/startTime'
-import { useCopyLink } from '@/use/useCopyLink';
 import VueDatePicker from '@vuepic/vue-datepicker';
+import CopyLink from './CopyLink.vue';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const store = useStartTimeStore()
-
-const { href, copy, isSupported } = useCopyLink('start')
-
 </script>
 
 <template>
   <div class="section">
     <div class="title">
       <h2>Start time</h2>
-      <button v-if="isSupported" @click="() => copy(href)" class="copy">📋</button>
-      <span v-else>Your does not support Clipboard API</span>
+      <CopyLink to="start" class="copy-link"/>
     </div>
     <div>
       <label for="format">Format: </label>
@@ -64,5 +60,8 @@ label {
 .time-picker {
   display: inline-block;
   width: 8em;
+}
+.copy-link {
+  max-width: 21.6em;
 }
 </style>

@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { type Format, type FormatsDefinitions } from '@/stores/topics';
-import { useCopyLink } from '@/use/useCopyLink';
+import CopyLink from './CopyLink.vue';
 
 const props = defineProps<{
   id: string,
   format: Format,
   formatType: keyof FormatsDefinitions
 }>()
-
-const { href, copy, isSupported } = useCopyLink(() => ({
-  name: 'label', 
-  params: { 
-    id: props.id,
-    formatType: props.formatType
-  }
-}))
 
 const emit = defineEmits<{
   (e: 'delete', id: string): void
@@ -25,7 +17,15 @@ const emit = defineEmits<{
   <li>
     <div>
       <h3>{{ id }}</h3>
-      <button v-if="isSupported" @click="() => copy(href)" class="copy">📋</button>
+      <CopyLink 
+        :to="{ 
+          name: 'label', 
+          params: { 
+            id: props.id,
+            formatType: props.formatType
+          }
+        }"
+      />
     </div>
     <div>
       <label :for="'format-' + id + '-pattern'">Pattern:</label>
@@ -46,3 +46,4 @@ const emit = defineEmits<{
     <button @click="() => emit('delete', id)" class="action-button">Delete</button>
   </li>
 </template>
+

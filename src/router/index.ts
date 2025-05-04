@@ -36,6 +36,11 @@ const router = createRouter({
           component: () => import('../views/ColumnsView.vue')
         },
         {
+          path: '/vdoNinja',
+          name: 'vdo-ninja',
+          component: () => import('../views/VdoNinjaView.vue')
+        },
+        {
           path: '/settings',
           name: 'settings',
           component: () => import('../views/SettingsView.vue')

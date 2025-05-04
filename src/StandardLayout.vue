@@ -32,6 +32,7 @@ function closeMenu() {
         <RouterLink to="/import">Import</RouterLink>
         <RouterLink to="/">Topics</RouterLink>
         <RouterLink to="/columns">Columns displayed</RouterLink>
+        <RouterLink to="/vdoNinja">Vdo Ninja</RouterLink>
         <RouterLink to="/settings">Settings</RouterLink>
       </nav>
     </header>

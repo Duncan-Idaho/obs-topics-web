@@ -6,7 +6,7 @@ import { computed, ref, useTemplateRef } from 'vue';
 
 const standardLayout = useTemplateRef('standardLayout')
 const { width } = useElementSize(standardLayout)
-const largeWidth = computed(() => width.value >= 448);
+const largeWidth = computed(() => width.value >= 800);
 
 const menuOpened = ref(false)
 const displayMenu = computed (() => largeWidth.value || menuOpened.value)
@@ -33,9 +33,9 @@ function closeMenu() {
       </a> 
       <nav v-if="displayMenu" ref="menu">
         <RouterLink to="/import">Import</RouterLink>
+        <RouterLink to="/assignments">Assignments</RouterLink>
         <RouterLink to="/">Topics</RouterLink>
         <RouterLink to="/columns">Columns displayed</RouterLink>
-        <RouterLink to="/vdoNinja">Vdo Ninja</RouterLink>
         <RouterLink to="/settings">Settings</RouterLink>
       </nav>
     </header>
@@ -128,7 +128,7 @@ nav a:first-of-type {
 }
 
 
-@container (min-width: 448px) {
+@container (min-width: 800px) {
   nav {
     position: initial;
     background-color: transparent;

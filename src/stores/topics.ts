@@ -39,8 +39,27 @@ export const useTopicsStore = defineStore('topics', () => {
     next: {}
   })
 
+  function makeFormatter(key: keyof FormatsDefinitions) {
+    return computed(() => {
+      return Object.fromEntries(
+        Object.entries(formats.value[key]).map(([ key, format ]) => [key, formatParser(format)]))
+    })
+  }
+
+  const formatters = {
+    current: makeFormatter('current'),
+    next: makeFormatter('next')
+  }
+
   const currentFormatted = makeFormatted('current', 0)
   const nextFormatted = makeFormatted('next', 1)
+
+  const allFormatted = computed(() => {
+    return Object.fromEntries(
+      topics.value.map(topic => [topic.$id + '', Object.fromEntries(
+        Object.entries(formatters.current.value).map(([ key, formatter ]) => [key, formatter(topic)]))])
+    )
+  })
 
   function makeFormatted(key: keyof FormatsDefinitions, index: number) {
     const parsedFormats = computed(() => {
@@ -173,6 +192,7 @@ export const useTopicsStore = defineStore('topics', () => {
     formats,
     currentFormatted,
     nextFormatted,
+    allFormatted,
     importRawString,
     markAsDone,
     moveToNow,

@@ -18,7 +18,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: () => import('../StandardLayout.vue'),
+      component: () => import('../DualLayout.vue'),
       children: [
         {
           path: '/',

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { useMediaQuery } from '@vueuse/core'
+import { useElementSize } from '@vueuse/core'
 import PreviewTooltip from '@/components/PreviewTooltip.vue'
-import { computed, ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 
-const largeWidth = useMediaQuery('(min-width: 28em)')
+const standardLayout = useTemplateRef('standardLayout')
+const { width } = useElementSize(standardLayout)
+const largeWidth = computed(() => width.value >= 448);
+
 const menuOpened = ref(false)
 const displayMenu = computed (() => largeWidth.value || menuOpened.value)
 
@@ -16,7 +19,7 @@ function closeMenu() {
 </script>
 
 <template>
-  <div class="standard-layout" @click="closeMenu">
+  <div class="standard-layout" ref="standardLayout" @click="closeMenu">
     <PreviewTooltip/>
 
     <header>
@@ -51,19 +54,17 @@ function closeMenu() {
         "main main" 1fr
         / auto 1fr;
   height: 100vh;
-  background: var(--color-background);
-  color: var(--color-text);
   padding-left: 0.4rem;
   padding-right: 0.4rem;
 }
 
-@media (min-width: 800px) {
+@container (min-width: 800px) {
   .standard-layout {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
-@media (min-height: 800px) {
+@container (min-height: 800px) {
   .standard-layout {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -127,7 +128,7 @@ nav a:first-of-type {
 }
 
 
-@media (min-width: 28em) {
+@container (min-width: 448px) {
   nav {
     position: initial;
     background-color: transparent;

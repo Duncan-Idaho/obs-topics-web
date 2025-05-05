@@ -78,33 +78,15 @@ function getGuestList() {
 </script>
 
 <template>
-  <main>
-    <div>
-      <span v-for="stream in state" :key="stream.streamID">{{ stream.label }}</span>
-    </div>
-    <div>
-      <button @click="getStreamIDs">getStreamIDs</button>
-      <button @click="getStreamInfo">getStreamInfo</button>
-      <button @click="getDetailedState">getDetailedState</button>
-      <button @click="getGuestList">getGuestList</button>
-      <button @click="addToAgora">addToAgora</button>
-    </div>
-    <iframe 
-      allow="document-domain;encrypted-media;sync-xhr;usb;web-share;cross-origin-isolated;midi *;geolocation;camera *;microphone *;fullscreen;picture-in-picture;display-capture;accelerometer;autoplay;gyroscope;screen-wake-lock;"
-      :src="store.url"      
-      />
-  </main>
+  <iframe 
+    allow="document-domain;encrypted-media;sync-xhr;usb;web-share;cross-origin-isolated;midi *;geolocation;camera *;microphone *;fullscreen;picture-in-picture;display-capture;accelerometer;autoplay;gyroscope;screen-wake-lock;"
+    :src="store.url"      
+    />
 </template>
 
 <style scoped>
 iframe {
   width: 100%;
-  height: 51rem;
-}
-
-div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  height: 100%;
 }
 </style>

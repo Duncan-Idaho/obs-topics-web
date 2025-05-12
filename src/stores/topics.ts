@@ -56,7 +56,7 @@ export const useTopicsStore = defineStore('topics', () => {
 
   const allFormatted = computed(() => {
     return Object.fromEntries(
-      topics.value.map(topic => [topic.$id + '', Object.fromEntries(
+      topics.value.map(topic => [+topic.$id, Object.fromEntries(
         Object.entries(formatters.current.value).map(([ key, formatter ]) => [key, formatter(topic)]))])
     )
   })
@@ -116,7 +116,7 @@ export const useTopicsStore = defineStore('topics', () => {
             break;
     }
 
-    function parseTopicEntry(topicEntry: string, topicIndex: Number): Topic {
+    function parseTopicEntry(topicEntry: string, topicIndex: number): Topic {
       const columnEntries = topicEntry.split('\t')
         .map((value, index) => ({ index, value: value.trim() }))
         .filter(pair => pair.index < headers.value.length)

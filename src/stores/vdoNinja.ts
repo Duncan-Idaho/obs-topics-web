@@ -26,15 +26,34 @@ export type Assignment = {
   scenes: string[]
 }
 
+export type Roles = Role[]
+
+export type Role = {
+  name: string
+  mainScenes: string[]
+  shareScenes: string[]
+}
+
 import { useTopicsStore } from '@/stores/topics';
 
 export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
   const topics = useTopicsStore()
 
   const url = useStorage('url', '')
-  const presenterScene = useStorage('vdo-ninja-presenter-scene', 'presenter')
-  const remotePresenterScene = useStorage('vdo-ninja-remote-presenter-scene', 'remote')
-  const screenShareScene = useStorage('vdo-ninja-schare-screen-scene', 'screen')
+  const roles = useStorage<Roles>('vdo-ninja-roles', [{
+    name: '🧑‍💻',
+    mainScenes: ['presenter'],
+    shareScenes: ['screen']
+  },{
+    name: '🌍',
+    mainScenes: ['presenter', 'remote'],
+    shareScenes: ['screen']
+  },{
+    name: '💻',
+    mainScenes: ['screen'],
+    shareScenes: []
+  },])
+
   const iframeElement = shallowRef<HTMLIFrameElement | null>(null)
 
   const detailedState = ref<DetailedState>({})
@@ -71,31 +90,23 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     postMessage({ getDetailedState: true })
   }
 
-  function assignAsPresenter(streamID: string, topics: string[]) {
+  function assignRole(streamID: string, topics: string[], role: Role) {
     assignments.value[streamID] = {
       topics: topics,
-      scenes: [presenterScene.value]
+      scenes: role.mainScenes
     }
-    assignAsScreenshare(streamID + ':s', topics)
-  }
-
-  function assignAsRemotePresenter(streamID: string, topics: string[]) {
-    assignments.value[streamID] = {
+    assignments.value[streamID + ':s'] = {
       topics: topics,
-      scenes: [presenterScene.value, remotePresenterScene.value]
-    }
-    assignAsScreenshare(streamID + ':s', topics)
-  }
-
-  function assignAsScreenshare(streamID: string, topics: string[]) {
-    assignments.value[streamID] = {
-      topics: topics,
-      scenes: [screenShareScene.value]
+      scenes: role.shareScenes
     }
   }
 
   function ignore(streamID: string) {
     assignments.value[streamID] = {
+      topics: [],
+      scenes: []
+    }
+    assignments.value[streamID + ':s'] = {
       topics: [],
       scenes: []
     }
@@ -139,11 +150,11 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
   }
 
   return { 
-    url, presenterScene, remotePresenterScene, screenShareScene, 
+    url, roles, 
     iframeElement, 
     detailedState, assignments, unassigned, allScenes,
     currentTopicId,
-    assignAsPresenter, assignAsRemotePresenter, assignAsScreenshare, ignore,
+    assignRole, ignore,
     handleMessage
   }
 })

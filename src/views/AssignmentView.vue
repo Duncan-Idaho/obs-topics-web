@@ -32,10 +32,12 @@ const firstUnassigned = computed(() => {
       <ul>
         <li v-for="(topic, id) in topicsStore.allFormatted" :key="id">
           {{ topic[firstFormat] }} : 
-          <button @click="vdoNinjaStore.assignAsPresenter(firstUnassigned.streamID, [id+''])">🧑‍💻</button>
-          <button @click="vdoNinjaStore.assignAsRemotePresenter(firstUnassigned.streamID, [id+''])">🌍</button>
-          <button @click="vdoNinjaStore.assignAsScreenshare(firstUnassigned.streamID, [id+''])">💻</button>
-          <button @click="vdoNinjaStore.ignore(firstUnassigned.streamID)">❌</button>
+          <button 
+            v-for="(role, id) in vdoNinjaStore.roles"
+            :key="id"
+            @click="vdoNinjaStore.assignRole(firstUnassigned.streamID, [id+''], role)">
+            {{ role.name }}
+          </button>
         </li>
       </ul>
     </template>

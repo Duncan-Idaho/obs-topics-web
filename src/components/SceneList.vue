@@ -30,8 +30,8 @@ function remove(scene: string) {
 <template>
   <div class="sub-section">
     <div>
-      <h4 v-if="scenes.length > 0">{{ title }}:</h4>
-      <span class="scene-list">
+      <h4>{{ title }}:</h4>
+      <span v-if="scenes.length > 0">
         <span class="scene" v-for="(scene, index) in scenes" :key="scene">
           <template v-if="index !==0"> , </template>
           {{ scene }}
@@ -42,6 +42,7 @@ function remove(scene: string) {
           >❌</button>
         </span>
       </span>
+      <span v-else>None</span>
     </div>
     <div>
       <button 

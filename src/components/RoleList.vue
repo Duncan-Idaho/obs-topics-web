@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useVdoNinjaStore } from '@/stores/vdoNinja';
-import RoleEntry from './RoleEntry.vue';
+import { useVdoNinjaStore } from '@/stores/vdoNinja'
+import CardList from './CardList.vue'
+import RoleEntry from './RoleEntry.vue'
 
 const vdoNinjaStore = useVdoNinjaStore()
 
@@ -12,15 +13,15 @@ const vdoNinjaStore = useVdoNinjaStore()
     <div class="title">
       <h3>VDO Ninja Roles</h3>
     </div>
-    <ul>
-      <RoleEntry 
-      v-for="(role, id) in vdoNinjaStore.roles" 
-      :key="id"
-      :id="id"
-      :role="role"
-      @delete="id => vdoNinjaStore.roles.splice(id, 1)"
-      />
-    </ul>
+    <CardList :items="vdoNinjaStore.roles">
+      <template #default="{item: role, index}">
+        <RoleEntry 
+          :id="index"
+          :role="role"
+          @delete="id => vdoNinjaStore.roles.splice(index, 1)"
+          />
+      </template>
+    </CardList>
   </div>
   <div class="footer">
     <button @click="() => vdoNinjaStore.roles.push({ name: '', mainScenes: [], shareScenes: [] })">
@@ -37,13 +38,6 @@ const vdoNinjaStore = useVdoNinjaStore()
   gap: 0.5rem;
 }
 
-ul {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  gap: 0.6em;
-  padding: 0.6em 0em;
-}
 .footer {
   width: 100%;
   padding: 0rem 0.5rem;

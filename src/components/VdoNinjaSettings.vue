@@ -14,6 +14,10 @@ const store = useVdoNinjaStore()
       <label for="vdo-ninja-url">Url</label>
       <input type="text" id="vdo-ninja-url" v-model="store.url"/>
     </div>
+    <div class="setting">
+      <label for="vdo-ninja-api-key">API Key</label>
+      <input type="text" id="vdo-ninja-api-key" v-model="store.apiKey"/>
+    </div>
     <RoleList/>
   </div>
 </template>

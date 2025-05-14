@@ -35,11 +35,15 @@ export type Role = {
 }
 
 import { useTopicsStore } from '@/stores/topics';
+import { useVdoNinjaApi } from '@/use/useWebSocket'
 
 export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
   const topics = useTopicsStore()
 
   const url = useStorage('url', '')
+  const apiKey = useStorage('api-key', crypto.randomUUID())
+  const fullUrl = computed(() => url.value + (url.value.includes('?') ? '&': '?') + 'api=' + apiKey.value)
+
   const roles = useStorage<Roles>('vdo-ninja-roles', [{
     name: '🧑‍💻',
     mainScenes: ['presenter'],
@@ -76,9 +80,6 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     if (data.action === 'view-stats-updated')
       return
   
-    // console.log(event.data);
-    // if (data.action === 'new-stream-added' || data.action === 'end-view-connection') {
-    // }
     if (data.detailedState) {
       detailedState.value = (data.detailedState as DetailedState)
     } else { 
@@ -118,8 +119,6 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
 
   const currentTopicId = computed(() => topics.topics.length ? topics.topics[0].$id + "" : null)
 
-  watch(currentTopicId, () => console.log(currentTopicId.value))
-
   watch(currentTopicId, id => {
     if (!id) 
       return
@@ -153,8 +152,14 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     }
   }
 
+  useVdoNinjaApi({
+    apiKey,
+    markTopicAsDone: () => topics.markAsDone(0),
+    moveTopicToLast: () => topics.moveToLast(false, 0)
+  })
+
   return { 
-    url, roles, 
+    url, apiKey, fullUrl, roles, 
     iframeElement, 
     detailedState, assignments, unassigned, allScenes,
     currentTopicId,

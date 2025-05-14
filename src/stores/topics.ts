@@ -141,6 +141,7 @@ export const useTopicsStore = defineStore('topics', () => {
     if (topic) {
       topicsDone.value.push(topic)
     }
+    return !!topic
   }
 
   function getTopics(done: boolean) {
@@ -150,21 +151,22 @@ export const useTopicsStore = defineStore('topics', () => {
   
   function moveToIndex(fromDone: boolean, topicIndex: number, newIndex: number) {
     const topic = getTopics(fromDone).splice(topicIndex, 1)[0]
-      if (topic) {
+    if (topic) {
       topics.value.splice(newIndex, 0, topic)
     }
+    return !!topic
   }
 
   function moveToNow(fromDone: boolean, topicIndex: number) {
-    moveToIndex(fromDone, topicIndex, 0)
+    return moveToIndex(fromDone, topicIndex, 0)
   }
   
   function moveToNext(fromDone: boolean, topicIndex: number) {
-    moveToIndex(fromDone, topicIndex, 1)
+    return moveToIndex(fromDone, topicIndex, 1)
   }
   
   function moveToLast(fromDone: boolean, topicIndex: number) {
-    moveToIndex(fromDone, topicIndex, topics.value.length - (fromDone ? 0 : 1))
+    return moveToIndex(fromDone, topicIndex, topics.value.length - (fromDone ? 0 : 1))
   }
 
   function formatParser(format: Format): (topic?: Topic) => string {

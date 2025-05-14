@@ -101,12 +101,12 @@ input:read-only {
   --dp-input-padding: 0;
 }
 
-textarea {
+textarea, select {
   background-color: var(--color-background-soft);
   color: var(--color-text);
 }
 
-textarea:focus-visible {
+textarea:focus-visible, select:focus-visible {
   outline: none;
   border: 1px solid var(--vt-c-indigo);
 }

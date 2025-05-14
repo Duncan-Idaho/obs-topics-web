@@ -1,14 +1,14 @@
 <script setup lang="ts" generic="T">
 defineProps<{
-  items: T[]
+  items: { [key: string]: T }
 }>()
 </script>
 
 <template>
   <ul>
-    <template v-for="(item, index) in items" :key="index">
+    <template v-for="(item, key) in items" :key="key">
       <li>
-        <slot :item="item" :index="index" />
+        <slot :item="item" :key="key" />
       </li>
     </template>
   </ul>

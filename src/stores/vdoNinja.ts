@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { computed, ref, shallowRef, watch, watchEffect } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 
 export type DetailedState = {
   [key: string]: Stream
@@ -101,6 +101,10 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     }
   }
 
+  function deleteAssignment(streamID: string) {
+    delete assignments.value[streamID]
+  }
+
   function ignore(streamID: string) {
     assignments.value[streamID] = {
       topics: [],
@@ -154,7 +158,7 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     iframeElement, 
     detailedState, assignments, unassigned, allScenes,
     currentTopicId,
-    assignRole, ignore,
+    assignRole, deleteAssignment, ignore,
     handleMessage
   }
 })

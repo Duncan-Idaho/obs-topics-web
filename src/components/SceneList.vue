@@ -5,7 +5,7 @@ import { useVdoNinjaStore } from '@/stores/vdoNinja';
 const vdoNinjaStore = useVdoNinjaStore()
 
 const props = defineProps<{
-  id: number,
+  id: number | string,
   type: string,
   title: string,
   scenes: string[],
@@ -45,13 +45,17 @@ function remove(scene: string) {
       <span v-else>None</span>
     </div>
     <div>
-      <button 
+      <template 
         v-for="scene in vdoNinjaStore.allScenes"
-        @click="() => add(scene)"
-        :title="'Add ' + scene"
-      >
-        ➕ {{ scene }}
-      </button>
+        :key="scene">
+        <button 
+          v-if="!scenes.includes(scene)"
+          @click="() => add(scene)"
+          :title="'Add ' + scene"
+        >
+          ➕ {{ scene }}
+        </button>
+      </template>
     </div>
     <div>
       <button 

@@ -30,10 +30,11 @@ export type Format = {
 
 export const useTopicsStore = defineStore('topics', () => {
   const headers = useStorage<string[]>('headers', [])
-  const topics = useStorage<Topics>('topics', [])
   const columnDisplay = useStorage<ColumnSelection>('column-display', {})
+  const topics = useStorage<Topics>('topics', [])
   const topicsDone = useStorage<Topics>('topicsDone', [])
-
+  const allTopics = computed(() => [...topics.value, ...topicsDone.value])
+  
   const formats = useStorage<FormatsDefinitions>('formats', {
     current: {},
     next: {}
@@ -56,7 +57,7 @@ export const useTopicsStore = defineStore('topics', () => {
 
   const allFormatted = computed(() => {
     return Object.fromEntries(
-      topics.value.map(topic => [+topic.$id, Object.fromEntries(
+      [...topics.value, ...topicsDone.value].map(topic => [+topic.$id, Object.fromEntries(
         Object.entries(formatters.current.value).map(([ key, formatter ]) => [key, formatter(topic)]))])
     )
   })
@@ -189,6 +190,7 @@ export const useTopicsStore = defineStore('topics', () => {
     columnDisplay, 
     displayedColumns,
     topicsDone, 
+    allTopics,
     formats,
     currentFormatted,
     nextFormatted,
@@ -198,6 +200,6 @@ export const useTopicsStore = defineStore('topics', () => {
     moveToNow,
     moveToNext,
     moveToLast,
-    formatParser
+    formatParser,
   }
 })

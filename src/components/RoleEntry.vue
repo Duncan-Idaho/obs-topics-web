@@ -39,16 +39,4 @@ const emit = defineEmits<{
   justify-content: space-between;
   margin-bottom: 0.25rem;
 }
-
-h4 {
-  font-weight: 500;
-  display: inline;
-}
-
-.sub-section {
-  border-left: 0.25rem solid var(--vt-c-divider-dark-2);
-  padding-left: 0.5rem;
-  margin: 0.3rem 0rem;
-}
-
 </style>

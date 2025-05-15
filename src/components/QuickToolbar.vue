@@ -1,22 +1,9 @@
 <script setup lang="ts">
 import { useStartTimeStore } from '@/stores/startTime'
-import { useNow } from '@vueuse/core'
 import { computed } from 'vue';
 import { useTopicsStore } from '@/stores/topics';
 const topicsStore = useTopicsStore()
-
-const store = useStartTimeStore()
-const now = useNow()
-function setInOffsetSeconds(minutes: number) {
-  const newStartTime = new Date(now.value)
-  newStartTime.setSeconds(newStartTime.getSeconds() + minutes)
-  store.startTime = newStartTime.valueOf()
-}
-function setInOffsetMinutes(minutes: number) {
-  const newStartTime = new Date(now.value)
-  newStartTime.setMinutes(newStartTime.getMinutes() + minutes)
-  store.startTime = newStartTime.valueOf()
-}
+const startTimeStore = useStartTimeStore()
 
 const firstFormatCurrent = computed(() => {
   const formats = Object.keys(topicsStore.formats.current)
@@ -41,10 +28,10 @@ const firstFormatNext = computed(() => {
     </div>
     <div class="postponing">      
       <div class="clock">⏱️</div>
-      <button @click="setInOffsetSeconds(5)">5s</button>
-      <button @click="setInOffsetMinutes(1)">1m</button>
-      <button @click="setInOffsetMinutes(2)">2m</button>
-      <button @click="setInOffsetMinutes(5)">5m</button>
+      <button @click="startTimeStore.setInOffsetSeconds(5)">5s</button>
+      <button @click="startTimeStore.setInOffsetMinutes(1)">1m</button>
+      <button @click="startTimeStore.setInOffsetMinutes(2)">2m</button>
+      <button @click="startTimeStore.setInOffsetMinutes(5)">5m</button>
     </div>
   </div>
 </template>

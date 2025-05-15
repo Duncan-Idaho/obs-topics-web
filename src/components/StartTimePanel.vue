@@ -1,34 +1,15 @@
 <script setup lang="ts">
 import { useStartTimeStore } from '@/stores/startTime'
-import { useNow } from '@vueuse/core'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import { computed } from 'vue';
 
 const store = useStartTimeStore()
-const now = useNow()
-const today = computed(() => {
-  const result = new Date(now.value)
-  result.setHours(store.defaultStartTime.hours)
-  result.setMinutes(store.defaultStartTime.minutes)
-  result.setSeconds(0)
-  result.setMilliseconds(0)
-  return result  
-})
 const presetDates = computed(() => [
-  { label: 'Default', value: today.value },
-  { label: 'Now', value: now.value },
+  { label: 'Default', value: store.today },
+  { label: 'Now', value: store.now },
 ])
-function setInOffsetSeconds(minutes: number) {
-  const newStartTime = new Date(now.value)
-  newStartTime.setSeconds(newStartTime.getSeconds() + minutes)
-  store.startTime = newStartTime.valueOf()
-}
-function setInOffsetMinutes(minutes: number) {
-  const newStartTime = new Date(now.value)
-  newStartTime.setMinutes(newStartTime.getMinutes() + minutes)
-  store.startTime = newStartTime.valueOf()
-}
+
 </script>
 
 <template>
@@ -51,10 +32,10 @@ function setInOffsetMinutes(minutes: number) {
       </div>
       <div class="postponing">      
         <div class="clock">⏱️</div>
-        <button @click="setInOffsetSeconds(5)">5s</button>
-        <button @click="setInOffsetMinutes(1)">1m</button>
-        <button @click="setInOffsetMinutes(2)">2m</button>
-        <button @click="setInOffsetMinutes(5)">5m</button>
+        <button @click="store.setInOffsetSeconds(5)">5s</button>
+        <button @click="store.setInOffsetMinutes(1)">1m</button>
+        <button @click="store.setInOffsetMinutes(2)">2m</button>
+        <button @click="store.setInOffsetMinutes(5)">5m</button>
       </div>
     </div>
   </div>

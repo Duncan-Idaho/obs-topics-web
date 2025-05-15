@@ -95,6 +95,8 @@ export const useTopicsStore = defineStore('topics', () => {
 
     topics.value.sort((topicLeft, topicRight) => getOrder(topicLeft) - getOrder(topicRight))
 
+    topicsDone.value = []
+
     function getOrder(topic: Topic): number {
       return typeof topic.Order === "number"
         ? topic.Order

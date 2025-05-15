@@ -33,6 +33,9 @@ defineProps<{
       </button>
     </li>
   </ul>
+  <button @click="vdoNinjaStore.ignore(firstUnassigned.streamID)">
+    ❌ Ignore
+  </button>
 </template>
 
 <style scoped>

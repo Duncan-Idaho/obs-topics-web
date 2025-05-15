@@ -91,6 +91,10 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     postMessage({ getDetailedState: true })
   }
 
+  function clearAssignments() {
+    assignments.value = {}
+  }
+
   function assignRole(streamID: string, topics: string[], role: Role) {
     assignments.value[streamID] = {
       topics: topics,
@@ -163,7 +167,7 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
     iframeElement, 
     detailedState, assignments, unassigned, allScenes,
     currentTopicId,
-    assignRole, deleteAssignment, ignore,
+    clearAssignments, assignRole, deleteAssignment, ignore,
     handleMessage
   }
 })

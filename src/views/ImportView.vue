@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import { useTopicsStore } from '@/stores/topics';
+import { useVdoNinjaStore } from '@/stores/vdoNinja'
 import { ref } from 'vue';
 import router from '@/router';
+import { useStartTimeStore } from '@/stores/startTime';
 
 const rawLines = ref('')
 const shouldStopImportAtFirstEmptyLine = ref(true)
 
 const store = useTopicsStore()
+const vdoNinjaStore = useVdoNinjaStore()
+const startTimeStore = useStartTimeStore()
 
 function importRawString() {
   store.importRawString(rawLines.value, shouldStopImportAtFirstEmptyLine.value)
+  vdoNinjaStore.clearAssignments()
+  startTimeStore.setDefault()
   router.push({ 
-    name: store.displayedColumns.length
-      ? 'topics'  
-      : 'columns'
+    name: getNextRoute()
   })
+}
+
+function getNextRoute() {
+  if (!store.displayedColumns.length)
+    return 'columns'
+  
+  if (vdoNinjaStore.url)
+    return 'assignments'
+  
+  return 'topics'
 }
 </script>
 

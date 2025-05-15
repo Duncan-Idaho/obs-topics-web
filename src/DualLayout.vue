@@ -14,7 +14,7 @@ const leftPercent = ref(40)
 </script>
 
 <template>
-  <template v-if="vdoNinjaStore.url.length">
+  <template v-if="vdoNinjaStore.url">
     <DragCol 
       :left-percent="leftPercent" 
       width="100%" 

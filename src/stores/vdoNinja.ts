@@ -151,7 +151,6 @@ export const useVdoNinjaStore = defineStore('vdo-ninja', () => {
 
   function postMessage(message: any) {
     if (iframeElement.value) {
-      console.log("postMessage", message)
       iframeElement.value.contentWindow?.postMessage(message, '*');
     }
   }

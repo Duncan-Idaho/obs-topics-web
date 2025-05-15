@@ -9,7 +9,7 @@ export type VdoNinjaApi = {
 export function useVdoNinjaApi(options: VdoNinjaApi) {
 
 	let socket: WebSocket | null = null
-	let connecting: number | undefined = undefined
+	let connecting: ReturnType<typeof setTimeout> | undefined = undefined
 	let failedCount = 0
 
   watch(

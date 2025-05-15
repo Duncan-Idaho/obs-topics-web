@@ -4,7 +4,7 @@ import { useElementSize } from '@vueuse/core'
 import PreviewTooltip from '@/components/PreviewTooltip.vue'
 import { computed, ref, useTemplateRef } from 'vue';
 
-const standardLayout = useTemplateRef('standardLayout')
+const standardLayout = useTemplateRef<HTMLDivElement, string>('standardLayout')
 const { width } = useElementSize(standardLayout)
 const largeWidth = computed(() => width.value >= 800);
 

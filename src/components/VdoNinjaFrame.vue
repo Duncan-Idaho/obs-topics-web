@@ -5,7 +5,7 @@ import { useVdoNinjaStore } from '@/stores/vdoNinja'
 import { watch } from 'vue'
 
 const store = useVdoNinjaStore()
-const iframe = useTemplateRef('vdoNinjaFrame')
+const iframe = useTemplateRef<HTMLIFrameElement, string>('vdoNinjaFrame')
 
 watch(iframe, value => store.iframeElement = value);
 useEventListener(window, 'message', store.handleMessage)

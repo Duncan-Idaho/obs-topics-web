@@ -91,7 +91,7 @@ describe('Topics store', () => {
 
     expect(store.displayedColumns).toEqual(["Team", "Presenter(s)", "For the mail"])
 
-    store.displayedColumns = ["Team", "For the mail", "Presenter(s)"]
+    store.columnDisplay = {"Team": true, "For the mail": true, "Presenter(s)": true}
     expect(store.displayedColumns).toEqual(["Team", "For the mail", "Presenter(s)"])
     expect(store.headers).toEqual([
       'Team',

@@ -24,7 +24,7 @@ const emit = defineEmits<{
     <thead>
       <VueDraggable 
         :model-value="columns"
-        @update:model-value="newValue => emit('update:columns', newValue)" 
+        @update:model-value="(newValue: string[]) => emit('update:columns', newValue)" 
         tag="tr" 
         :item-key="(key: string) => key"
         ghost-class="ghost"
@@ -40,7 +40,7 @@ const emit = defineEmits<{
     
     <VueDraggable 
       :model-value="modelValue"
-      @update:model-value="newValue => emit('update:modelValue', newValue)"
+      @update:model-value="(newValue: Topics) => emit('update:modelValue', newValue)"
       tag="tbody" 
       item-key="$id"
       ghost-class="ghost"
